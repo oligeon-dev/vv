@@ -48,6 +48,7 @@ function App() {
       <p>Width: {viewport.width}px</p>
       <p>Height: {viewport.height}px</p>
       <p>Scale: {viewport.scale}</p>
+      <input type="text" />
     </div>
   );
 }
