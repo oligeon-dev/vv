@@ -48,6 +48,7 @@ function App() {
 
   return (
     <div>
+      <h1>Visual Viewport Info</h1>
       <p>Width: {viewport.width}px</p>
       <p>Height: {viewport.height}px</p>
       <p>Scale: {viewport.scale}</p>
