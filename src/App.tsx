@@ -1,25 +1,45 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-// interface Viewport {
-//   width: number;
-//   height: number;
-//   scale: number;
-// }
+interface Viewport {
+  width: number;
+  height: number;
+  scale: number;
+  pageTop: number;
+}
 
 function App() {
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const [viewport, setViewport] = useState<Viewport>({
+    width: window.visualViewport?.width || window.innerWidth,
+    height: window.visualViewport?.height || window.innerHeight,
+    scale: window.visualViewport?.scale || 1,
+    pageTop: window.visualViewport?.pageTop || 0,
+  });
 
   useEffect(() => {
-    const handleResize = () => {
-      setViewportHeight(window.innerHeight);
+    const handleViewportChange = () => {
+      if (window.visualViewport) {
+        setViewport({
+          width: window.visualViewport.width,
+          height: window.visualViewport.height,
+          scale: window.visualViewport.scale,
+          pageTop: window.visualViewport.pageTop,
+        });
+      }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.visualViewport?.addEventListener("resize", handleViewportChange);
+    window.visualViewport?.addEventListener("scroll", handleViewportChange);
 
-    // クリーンアップ
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener(
+        "resize",
+        handleViewportChange
+      );
+      window.visualViewport?.removeEventListener(
+        "scroll",
+        handleViewportChange
+      );
     };
   }, []);
 
@@ -29,8 +49,10 @@ function App() {
 
   return (
     <div>
-      <h5>Viewport Info</h5>
-      <p>Height: {viewportHeight}px</p>
+      <h5>Visual Viewport Info</h5>
+      <p>Width: {viewport.width}px</p>
+      <p>Height: {viewport.height}px</p>
+      <p>Scale: {viewport.scale}</p>
       <input
         type="text"
         className="input"
@@ -41,10 +63,10 @@ function App() {
         className="footer"
         style={{
           position: "fixed",
-          bottom: `calc(0px + ${window.innerHeight - viewportHeight}px)`, // キーボード分の高さ調整
+          bottom: `calc(0px + ${viewport.pageTop}px)`, // キーボード表示分を反映
           left: 0,
           right: 0,
-          backgroundColor: "lightgrey",
+          backgroundColor: "black",
           padding: "1rem",
           textAlign: "center",
         }}
