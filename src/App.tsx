@@ -5,7 +5,6 @@ interface Viewport {
   width: number;
   height: number;
   scale: number;
-  pageTop: number;
 }
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
     width: window.visualViewport?.width || window.innerWidth,
     height: window.visualViewport?.height || window.innerHeight,
     scale: window.visualViewport?.scale || 1,
-    pageTop: window.visualViewport?.pageTop || 0,
   });
 
   useEffect(() => {
@@ -23,7 +21,6 @@ function App() {
           width: window.visualViewport.width,
           height: window.visualViewport.height,
           scale: window.visualViewport.scale,
-          pageTop: window.visualViewport.pageTop,
         });
       }
     };
@@ -60,10 +57,9 @@ function App() {
         style={{ fontSize: "1rem" }}
       />
       <div
-        className="footer"
         style={{
           position: "fixed",
-          bottom: `calc(0px + ${viewport.pageTop}px)`, // キーボード表示分を反映
+          bottom: `calc(0px + ${window.innerHeight - viewport.height}px)`, // キーボード分の高さ調整
           left: 0,
           right: 0,
           backgroundColor: "black",
