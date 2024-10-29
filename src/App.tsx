@@ -58,6 +58,7 @@ function App() {
         onTouchStart={handleTouchStart}
         style={{ fontSize: "1rem" }}
       />
+      <div className="footer">Footer</div>
     </div>
   );
 }
