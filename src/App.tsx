@@ -42,13 +42,22 @@ function App() {
     };
   }, []);
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       <h1>Visual Viewport Info</h1>
       <p>Width: {viewport.width}px</p>
       <p>Height: {viewport.height}px</p>
       <p>Scale: {viewport.scale}</p>
-      <input type="text" className="input" style={{ fontSize: "1rem" }} />
+      <input
+        type="text"
+        className="input"
+        onTouchStart={handleTouchStart}
+        style={{ fontSize: "1rem" }}
+      />
     </div>
   );
 }
