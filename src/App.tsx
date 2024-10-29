@@ -48,7 +48,7 @@ function App() {
       <p>Width: {viewport.width}px</p>
       <p>Height: {viewport.height}px</p>
       <p>Scale: {viewport.scale}</p>
-      <input type="text" style={{ fontSize: "1rem" }} />
+      <input type="text" className="input" style={{ fontSize: "1rem" }} />
     </div>
   );
 }
