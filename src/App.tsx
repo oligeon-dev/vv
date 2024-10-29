@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import "./App.css";
 
 interface Viewport {
@@ -29,7 +28,6 @@ function App() {
     window.visualViewport?.addEventListener("resize", handleViewportChange);
     window.visualViewport?.addEventListener("scroll", handleViewportChange);
 
-    // Cleanup event listeners on component unmount
     return () => {
       window.visualViewport?.removeEventListener(
         "resize",
@@ -58,7 +56,19 @@ function App() {
         onTouchStart={handleTouchStart}
         style={{ fontSize: "1rem" }}
       />
-      <div className="footer">Footer</div>
+      <div
+        style={{
+          position: "fixed",
+          bottom: `calc(0px + ${window.innerHeight - viewport.height}px)`, // キーボード分の高さ調整
+          left: 0,
+          right: 0,
+          backgroundColor: "black",
+          padding: "1rem",
+          textAlign: "center",
+        }}
+      >
+        Footer
+      </div>
     </div>
   );
 }
