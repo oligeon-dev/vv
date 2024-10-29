@@ -1,42 +1,25 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-interface Viewport {
-  width: number;
-  height: number;
-  scale: number;
-}
+// interface Viewport {
+//   width: number;
+//   height: number;
+//   scale: number;
+// }
 
 function App() {
-  const [viewport, setViewport] = useState<Viewport>({
-    width: window.visualViewport?.width || window.innerWidth,
-    height: window.visualViewport?.height || window.innerHeight,
-    scale: window.visualViewport?.scale || 1,
-  });
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   useEffect(() => {
-    const handleViewportChange = () => {
-      if (window.visualViewport) {
-        setViewport({
-          width: window.visualViewport.width,
-          height: window.visualViewport.height,
-          scale: window.visualViewport.scale,
-        });
-      }
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
     };
 
-    window.visualViewport?.addEventListener("resize", handleViewportChange);
-    window.visualViewport?.addEventListener("scroll", handleViewportChange);
+    window.addEventListener("resize", handleResize);
 
+    // クリーンアップ
     return () => {
-      window.visualViewport?.removeEventListener(
-        "resize",
-        handleViewportChange
-      );
-      window.visualViewport?.removeEventListener(
-        "scroll",
-        handleViewportChange
-      );
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -46,10 +29,8 @@ function App() {
 
   return (
     <div>
-      <h5>Visual Viewport Info</h5>
-      <p>Width: {viewport.width}px</p>
-      <p>Height: {viewport.height}px</p>
-      <p>Scale: {viewport.scale}</p>
+      <h5>Viewport Info</h5>
+      <p>Height: {viewportHeight}px</p>
       <input
         type="text"
         className="input"
@@ -57,12 +38,13 @@ function App() {
         style={{ fontSize: "1rem" }}
       />
       <div
+        className="footer"
         style={{
           position: "fixed",
-          bottom: `calc(0px + ${window.innerHeight - viewport.height}px)`, // キーボード分の高さ調整
+          bottom: `calc(0px + ${window.innerHeight - viewportHeight}px)`, // キーボード分の高さ調整
           left: 0,
           right: 0,
-          backgroundColor: "black",
+          backgroundColor: "lightgrey",
           padding: "1rem",
           textAlign: "center",
         }}
